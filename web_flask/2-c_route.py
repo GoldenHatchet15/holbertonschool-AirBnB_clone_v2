@@ -19,7 +19,7 @@ def hbnb():
 
 @app.route('/c/<text>')
 def c_text(text):
-    """Display custom text given. Replace underscores with spaces in the URL."""
+    """Display cstom txt given. Replace underscores with spaces in the URL."""
     return 'C {}'.format(text.replace('_', ' '))
 
 
