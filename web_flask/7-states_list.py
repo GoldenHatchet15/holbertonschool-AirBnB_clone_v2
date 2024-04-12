@@ -2,6 +2,7 @@
 """A simple Flask application"""
 from flask import Flask
 from flask import render_template
+from models import storage
 
 app = Flask(__name__)
 
@@ -40,6 +41,19 @@ def number_odd_or_even(n):
     """Display an HTML page only if n is an integer."""
     result="even" if n % 2 == 0 else "odd"
     return render_template('6-number_odd_or_even.html', n=n, result=result)
+
+@app.route('/states_list', strict_slashes=False)
+def states_list():
+    """Display a HTML page with a list of all States."""
+    states = storage.all("State")
+    # Sorting states by name
+    states_sorted = sorted(states.values(), key=lambda state: state.name)
+    return render_template('7-states_list.html', states=states_sorted)
+
+@app.teardown_appcontext
+def close_session(exception):
+    """Remove the current SQLAlchemy session."""
+    storage.close()
 
 if __name__ == "__main__":
     # The application will listen on all public IPs (0.0.0.0) and port 5000
