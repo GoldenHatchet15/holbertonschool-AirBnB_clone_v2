@@ -46,9 +46,7 @@ def number_odd_or_even(n):
 def states_list():
     """Display a HTML page with a list of all States."""
     states = storage.all("State")
-    # Sorting states by name
-    states_sorted = sorted(states.values(), key=lambda state: state.name)
-    return render_template('7-states_list.html', states=states_sorted)
+    return render_template('7-states_list.html', states=states)
 
 @app.teardown_appcontext
 def close_session(exception):
