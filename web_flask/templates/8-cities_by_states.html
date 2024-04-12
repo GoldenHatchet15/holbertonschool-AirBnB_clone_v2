@@ -6,16 +6,23 @@
 <BODY>
     <H1>States and Cities</H1>
     <UL>
-    {% for state in states %}
+    {% for state, cities in states %}
         <LI>{{ state.id }}: <B>{{ state.name }}</B>
+            {% if cities %}
             <UL>
-            {% for city in state.cities %}
-                <LI>{{ city.id }}: {{ city.name }}</LI>
-            {% endfor %}
+                {% for city in cities %}
+                    <LI>{{ city.id }}: {{ city.name }}</LI>
+                {% endfor %}
             </UL>
+            {% else %}
+            <UL>
+                <LI>No cities</LI>
+            </UL>
+            {% endif %}
         </LI>
     {% endfor %}
     </UL>
 </BODY>
 </HTML>
+
 
