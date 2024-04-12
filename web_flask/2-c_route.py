@@ -14,9 +14,10 @@ def hbnb():
     """Return a simple string 'HBNB' when accessing the /hbnb URL."""
     return 'HBNB'
 
-def c_is_fun(text):
-    """Return a string 'C is fun!'"""
-    return 'C' + text.replace('_', ' ')
+@app.route('/c/<text>')
+def c_text(text):
+    """display custom text given"""
+    return "C {}".format(text.replace('_', ' '))
 
 if __name__ == "__main__":
     # The application will listen on all public IPs (0.0.0.0) and port 5000
