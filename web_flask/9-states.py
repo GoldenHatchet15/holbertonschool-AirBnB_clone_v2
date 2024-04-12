@@ -3,6 +3,7 @@
 from flask import Flask
 from flask import render_template
 from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -52,6 +53,30 @@ def states_list():
 def close_session(exception):
     """Remove the current SQLAlchemy session."""
     storage.close()
+
+@app.route('/cities_by_states', strict_slashes=False)
+def cities_by_states():
+    """Display a HTML page with a list of all States and their Cities."""
+    states = storage.all("State").values()
+    # Sort states by name and cities by name under each state
+    states = sorted(states, key=lambda state: state.name)
+    for state in states:
+        state.cities = sorted(state.cities, key=lambda city: city.name)
+    return render_template('8-cities_by_states.html', states=states)
+
+@app.route('/states', strict_slashes=False)
+def list_states():
+    """Display a HTML page with a list of all States."""
+    states = storage.all(State).values()
+    return render_template('9-states.html', states=states, id=None)
+
+@app.route('/states/<id>', strict_slashes=False)
+def list_cities(id):
+    """Display a HTML page with a list of Cities in a State."""
+    states = storage.all(State).values()
+    state = next((s for s in states if s.id == id), None)
+    return render_template('9-states.html', states=states, id=id, state=state)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='5000')
