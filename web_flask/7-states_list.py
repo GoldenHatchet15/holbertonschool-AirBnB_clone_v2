@@ -47,7 +47,7 @@ def number_odd_or_even(n):
 @app.route('/states_list')
 def states_list():
     """Display an HTML page that lists all State objects in the database."""
-    states = storage.all(State)
+    states = storage.all(State).values()
     sorted_states = sorted(states, key=lambda state: state.name)
     return render_template("7-states_list.html", states=sorted_states)
 
@@ -57,4 +57,4 @@ def close_session(exception):
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port=5000)
