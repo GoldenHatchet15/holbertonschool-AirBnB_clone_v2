@@ -33,7 +33,8 @@ def number(n):
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
     """Display an HTML page only if n is an integer."""
-    return render_template('5-number.html', n=n)
+    return render_template('5-number.html', number=n)  # Change `n=n` to `number=n`
+
 
 if __name__ == "__main__":
     # The application will listen on all public IPs (0.0.0.0) and port 5000
