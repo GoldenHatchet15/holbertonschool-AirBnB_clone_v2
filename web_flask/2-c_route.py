@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """A simple Flask application"""
-
 from flask import Flask
 
 app = Flask(__name__)
@@ -9,6 +8,15 @@ app = Flask(__name__)
 def hello_hbnb():
     """Return a simple string 'Hello HBNB!' when accessing the root URL."""
     return 'Hello HBNB!'
+
+@app.route('/hbnb', strict_slashes=False)
+def hbnb():
+    """Return a simple string 'HBNB' when accessing the /hbnb URL."""
+    return 'HBNB'
+
+def c_is_fun(text):
+    """Return a string 'C is fun!'"""
+    return 'C' + text.replace('_', ' ')
 
 if __name__ == "__main__":
     # The application will listen on all public IPs (0.0.0.0) and port 5000
