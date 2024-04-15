@@ -73,6 +73,20 @@ def cities_by_states():
     return render_template('8-cities_by_states.html', states=states)
 
 
+@app.route('/states')
+def list_states():
+    """Display a HTML page with a list of all States."""
+    states = storage.all(State).values()
+    return render_template('9-states.html', states=states, id=None)
+
+@app.route('/states/<id>')
+def list_cities(id):
+    """Display a HTML page with a list of Cities in a State."""
+    states = storage.all(State).values()
+    state = next((s for s in states if s.id == id), None)
+    return render_template('9-states.html', states=states, id=id, state=state)
+
+
 @app.teardown_appcontext
 def close_session(exception):
     """Remove the current SQLAlchemy session."""
