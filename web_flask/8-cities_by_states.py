@@ -64,15 +64,13 @@ def states_list():
 
 @app.route('/cities_by_states')
 def cities_by_states():
-    """Display a HTML page with a list of all States and their Cities."""
+    """ Display the states and cities listed in the database. """
     states = storage.all(State).values()
-    # Prepare and sort states and cities
-    prepared_states = []
-    for state in sorted(states, key=lambda state: state.name):
-        cities = sorted(state.cities, key=lambda city: city.name) if hasattr(state, 'cities') else []
-        prepared_states.append((state, cities))
-    return render_template('8-cities_by_states.html', states=prepared_states)
-
+    states = sorted(states, key=lambda state: state.name)
+    """If needed, sort cities of each state as well"""
+    for state in states:
+        state.cities = sorted(state.cities, key=lambda city: city.name)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 @app.teardown_appcontext
