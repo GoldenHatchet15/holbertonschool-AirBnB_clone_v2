@@ -97,31 +97,6 @@ def list_states_cities(id):
     return render_template('9-states.html', states=states, id=id, state=state)
 
 
-@app.route('/states', defaults={'id': None})  # default value for `id` is None
-@app.route('/states/<id>')
-def states(id):
-    """The states page that displays all states or a specific state with its cities."""
-    all_states = list(storage.all(State).values())
-    selected_state = None
-    if id:
-        # Find the state by id
-        selected_state = next((state for state in all_states if state.id == id), None)
-        if selected_state:
-            # If a specific state is found, sort its cities by name
-            selected_state.cities.sort(key=lambda x: x.name)
-    else:
-        # Sort all states and their cities by name if no specific state is requested
-        for state in all_states:
-            state.cities.sort(key=lambda x: x.name)
-        all_states.sort(key=lambda x: x.name)
-
-    context = {
-        'states': None if id and selected_state else all_states,
-        'state': selected_state,
-        'case': 2 if id and selected_state else 1
-    }
-    return render_template('9-states.html', **context)
-
 
 @app.teardown_appcontext
 def close_session(exception):
