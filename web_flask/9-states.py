@@ -78,14 +78,13 @@ def cities_by_states():
 def states(id):
     """Render the states list or specific state's cities list."""
     states = list(storage.all(State).values())
-    state = None
-    # If an ID is provided, filter for the specific state
     if id:
         state = next((state for state in states if state.id == id), None)
-    states = sorted(states, key=lambda x: x.name)  # Sort states
-    return render_template('9-states.html', states=states, id=id, state=state)
+        return render_template('9-states.html', id=id, state=state, states=None)
+    else:
+        states = sorted(states, key=lambda x: x.name)
+        return render_template('9-states.html', states=states, id=None, state=None)
 
-    
 
 @app.teardown_appcontext
 def close_session(exception):
